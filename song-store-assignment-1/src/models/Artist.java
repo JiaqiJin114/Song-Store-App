@@ -11,7 +11,9 @@ public class Artist {
 
     //TODO Add the constructor, Artist(String, boolean), that adheres to the above validation rules
     public Artist(String artistName, boolean verified) {
-        this.artistName = artistName;
+        while (artistName.length() < 15){
+            this.artistName = artistName;
+        }
         this.verified = verified;
     }
 
@@ -44,9 +46,18 @@ public class Artist {
     //TODO The toString should return the string in this format:
     //      Taylor Swift is a verified artist  OR
     //      Shane Hennessy is not a verified artist
+
+    private String judgement(){
+        if(isVerified()){
+            return "";
+        }else {
+            return "not";
+        }
+    }
+
     @Override
     public String toString() {
-        return artistName;
+        return artistName + "is" + judgement() + "a verified artist";
     }
 
 }

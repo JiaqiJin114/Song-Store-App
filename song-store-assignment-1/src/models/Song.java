@@ -1,7 +1,6 @@
 package models;
 
 public class Song {
-
     //TODO The song id (int songId) is between 1000 to 9999(both inclusive).  Default is 9999.
 
     //TODO The song name (String name).
@@ -21,9 +20,13 @@ public class Song {
 
     //TODO Add the constructor, Song(int, String, Artist), that adheres to the above validation rules
     public Song(int songId, String name, Artist artist) {
+        while(songId >= 1000 && songId <= 9999){
+            this.songId = songId;
+        }
+        while(name.length() <= 20){
+            this.name = name;
+        }
         this.artist = artist;
-        this.name = name;
-        this.songId = songId;
     }
 
     //TODO Add a getter and setter for each field, that adheres to the above validation rules
