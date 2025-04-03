@@ -181,11 +181,11 @@ public class Driver {
     //------------------------------------
     // Private methods for CRUD on Song
     //------------------------------------
-    private static void addSong() {
-        System.out.println(Playlist.addSong());
+    private void addSong() {
+        System.out.println(playlist.addSong());
     }
-    private static void removeSong() {
-        System.out.println(Playlist.removeSong());
+    private void removeSong() {
+        System.out.println(playlist.removeSong());
     }
 
     private void updateSong() {
@@ -195,11 +195,31 @@ public class Driver {
         Song song = new Song();
         playlist.updateSong(songId, song);
     }
+    private void listSong(){
+        System.out.println(playlist.listSong());
+    }
+
+
+    private void listVerifiedArtistSong(){
+        System.out.println(playlist.listVerifiedArtistSong());
+
+    }
+    private void listArtistSong(){
+        System.out.println(playlist.listArtistSong());
+    }
 
 
     //-----------------------------------------------------------------
     //  Private methods for Search facility
     //-----------------------------------------------------------------
+    private void searchSong() {
+        System.out.println(playlist.searchSong());
+    }
+    private void SearchLongTimeSong() {
+        System.out.println(playlist.SearchLongTimeSong());
+    }
+    private void findSongbyint() {}
+
 
 
     //-----------------------------
