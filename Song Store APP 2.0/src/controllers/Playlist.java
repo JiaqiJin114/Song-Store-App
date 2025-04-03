@@ -84,6 +84,19 @@ public class Playlist {
     //     The other parameter is a  Song object - that is being updated
     //     i.e. it holds the new values of  id, name, length, and artist.
     //     If the update was successful, then return true.
+    public static  boolean updateSong(int songId , Song song) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the index of song you want to update?: ");
+        int songIndex = sc.nextInt();
+        for (int i = 0; i < Song.size(); i++) {
+            if (Song.get(i).getSongId() == songId) {
+                Song.set(i, song);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
     //TODO Add a method, deleteSong(int).  The return type is Song.
