@@ -3,8 +3,6 @@ import models.Song;
 
 import java.util.Scanner;
 
-import static controllers.Playlist.*;
-
 public class Driver {
 
     //TODO Define an object of the Playlist here.  It should be declared private.
@@ -30,29 +28,57 @@ public class Driver {
     private  int mainMenu() {
         Scanner sc = new Scanner(System.in);
         System.out.print("""
-        Song Store App
-        1)  add Method
-        2)  list Method
-        3)  search Method
-        4)  remove Method
-        5)  update Method
-        0)  Exit
+                ---------------------------------------------------------------------
+                |                             SONGS APP                             |
+                ---------------------------------------------------------------------
+                |  Song MENU                                                        |
+                |   1) Add a Song                                                   |
+                |   2) List all Songs                                               |
+                |   3) Update a Song                                                |
+                |   4) Delete a Song                                                |
+                |   5) Set verified status of a specific song's artist              |
+                |   6) Find a specific Song (by code)                               |
+                |   7) Search for a specific Song (by name)                         |
+                |   8) Add a like to playlist                                       |
+                ---------------------------------------------------------------------
+                |  REPORT MENU                                                      |
+                ---------------------------------------------------------------------
+                |   9) List all Songs by verified artists                           |
+                |   10) List all Songs over a given length                          |
+                |   11) List all Songs by a given artist                            |
+                |   12) Print the average length of songs in the playlist           |
+                |   13) Print the total length of songs in the playlist             |
+                ---------------------------------------------------------------------
+                |  SETTINGS MENU                                                    |
+                ---------------------------------------------------------------------
+                |   20) Save                                                        |
+                |   21) Load                                                        |
+                |   0) Exit                                                         |
+                ---------------------------------------------------------------------
+                ==>>
         ==>> """);
         System.out.print("Please enter your choice : ");
         int option = sc.nextInt();
         System.out.println("---------------------------------------");
         return option;
     }
+
+    private void printAverageLength(){
+
+    }
+    private void printLengthOfPlaylist(){
+
+    }
     private void runMenu() {
         Scanner sc= new Scanner(System.in);
         int option = mainMenu();
         while (option != 0) {
             switch (option) {
-                case 1 -> addMenu();
+                case 1 -> addSong();
                 case 2 -> listMenu();
                 case 3 -> searchMenu();
                 case 4 -> removeMenu();
-                case 5 -> updateMenu();
+                case 5 -> updateSong();
                 default -> System.out.println("Invalid option entered: " + option) ;
             }
 
@@ -65,7 +91,11 @@ public class Driver {
         System.exit(0);
     }
 
-    private void addMenu() {
+    private void save(){
+
+    }
+
+    private void addSong() {
         Scanner sc = new Scanner(System.in);
         System.out.print("""
         Add methods
@@ -100,31 +130,9 @@ public class Driver {
         int option = sc.nextInt();
         while (option != 0) {
             switch (option) {
-                case 1 -> listSong();
-                case 2 -> listVerifiedArtistSong();
-                case 3 -> listArtistSong();
-                case 0 -> runMenu();
-                default -> System.out.println("Invalid option entered: " + option);
-            }
-            System.out.println("---------------------------------------");
-            Driver driver = new Driver();
-            driver.runMenu();
-        }
-    }
-    private  void searchMenu() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("""
-        Search methods
-        1)  searchSong
-        2)  SearchLongTimeSong
-        0)  Exit
-        ==>> """);
-        System.out.print("Please enter your choice : ");
-        int option = sc.nextInt();
-        while (option != 0) {
-            switch (option) {
-                case 1 -> searchSong();
-                case 2 -> SearchLongTimeSong();
+                case 1 -> listAllSongs();
+                case 2 -> listSongsOfGivenArtist();
+                case 3 -> listSongsByVerifiedArtists();
                 case 0 -> runMenu();
                 default -> System.out.println("Invalid option entered: " + option);
             }
@@ -135,29 +143,10 @@ public class Driver {
     }
 
 
-    private  void removeMenu() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("""
-        Remove methods
-        1)  removeSong
-        2)  remove Artist
-        0)  Exit
-        ==>> """);
-        System.out.print("Please enter your choice : ");
-        int option = sc.nextInt();
-        while (option != 0) {
-            switch (option) {
-                case 1 -> removeSong();
-                case 0 -> runMenu();
-                default -> System.out.println("Invalid option entered: " + option);
-            }
-            System.out.println("---------------------------------------");
-            Driver driver = new Driver();
-            driver.runMenu();
-        }
-    }
 
-    private void updateMenu() {
+
+
+    private void updateSong() {
         Scanner sc = new Scanner(System.in);
         System.out.print("""
         Remove methods
@@ -181,30 +170,22 @@ public class Driver {
     //------------------------------------
     // Private methods for CRUD on Song
     //------------------------------------
-    private void addSong() {
-        System.out.println(playlist.addSong());
-    }
-    private void removeSong() {
+
+    private void deleteSong() {
         System.out.println(playlist.removeSong());
     }
 
-    private void updateSong() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the index of song you want to update?: ");
-        int songId = sc.nextInt();
-        Song song = new Song();
-        playlist.updateSong(songId, song);
-    }
-    private void listSong(){
+
+    private void listAllSongs(){
         System.out.println(playlist.listSong());
     }
 
 
-    private void listVerifiedArtistSong(){
+    private void listSongsOfGivenArtist(){
         System.out.println(playlist.listVerifiedArtistSong());
 
     }
-    private void listArtistSong(){
+    private void listSongsByVerifiedArtists(){
         System.out.println(playlist.listArtistSong());
     }
 
@@ -212,13 +193,8 @@ public class Driver {
     //-----------------------------------------------------------------
     //  Private methods for Search facility
     //-----------------------------------------------------------------
-    private void searchSong() {
-        System.out.println(playlist.searchSong());
-    }
-    private void SearchLongTimeSong() {
-        System.out.println(playlist.SearchLongTimeSong());
-    }
-    private void findSongbyint() {}
+
+   private void findSongById() {}
 
 
 
@@ -230,7 +206,17 @@ public class Driver {
     //---------------------------------
     //  Private methods for Persistence
     // --------------------------------
+    private void listSongsOverGivenLength(){
 
+    }
+
+    private void searchSongByName(){
+
+    }
+
+    private void load(){
+
+    }
 
     //TODO Add a method, load().  The return type is void.
     //    This method uses the XStream component to deserialise the playList object and their associated artists from
