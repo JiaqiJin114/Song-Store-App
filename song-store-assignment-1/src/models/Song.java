@@ -22,10 +22,10 @@ public class Song {
     private int length = 1;
 
     //TODO Add the constructor, Song(int, String, Artist), that adheres to the above validation rules
-    public Song(int songId, String name,Artist artist, int length) {
+    public Song(int songId, String name, String artistName, boolean verified, int length) {
         this.songId = validateSongId(songId);
         this.name = limitString(name, 20);
-        this.artist = artist = new Artist("", false);
+        this.artist = new Artist(artistName, verified);
         this.length = validateLength(length);
     }
 

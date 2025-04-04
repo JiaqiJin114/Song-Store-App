@@ -2,6 +2,7 @@ package controllers;
 
 import models.Artist;
 import models.Song;
+import utils.ScannerInput;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -61,7 +62,7 @@ public class Playlist {
     }
 
     public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
+        this.playlistName = limit(playlistName, 20);
     }
 
     public String getDescription() {
@@ -69,7 +70,7 @@ public class Playlist {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = limit(description, 30);
     }
 
     public int getLikes() {
@@ -92,26 +93,18 @@ public class Playlist {
     public boolean addSong(Song song) {
         int num = sc.nextInt();
         for (int i = 0; i < num; i++) {
-            System.out.print("Enter Song ID: ");
-            int songID = sc.nextInt();
-            System.out.print("Enter Song Name: ");
-            String SongName = sc.next();
-            System.out.print("Enter Artist Name: ");
-            String ArtistName = sc.next();
-            System.out.print("Is this Song Verified? (y/n): ");
-            char ans = sc.next().charAt(0);
+
+            int songID = ScannerInput.readNextInt("Enter song ID: ");
+            String songName = ScannerInput.readNextLine("Enter song name: ");
+            String artistName = ScannerInput.readNextLine("Enter artist name: ");
+            char ans = ScannerInput.readNextChar("Is this song verified? (y/n): ");
+            int lengthOfSong = ScannerInput.readNextInt("Enter length of Song ");
+
             boolean result = false;
-            if ((ans == 'y') || (ans == 'Y'))
+            if ((ans == 'y') || (ans == 'Y')){
                 result = true;
-            boolean VerifiedArtist = result;
-            ArrayList<Artist> artists = new ArrayList<>();
-            Artist artist = new Artist(ArtistName,VerifiedArtist);
-            artists.add(artist);
-            System.out.print("Enter length of Song ");
-            int lengthOfSong = sc.nextInt();
-            Song s =new Song(songID,SongName,artist);
-            Song.add(s);
-            System.out.println("Song Added Successfully");
+            }
+
         }
         return "";
     }
@@ -124,9 +117,9 @@ public class Playlist {
     //     i.e. it holds the new values of  id, name, length, and artist.
     //     If the update was successful, then return true.
     public boolean updateSong(int songId , Song song) {
-        for (int i = 0; i < Song.size(); i++) {
-            if (Song.get(i).getSongId() == songId) {
-                Song.set(i, song);
+        for (int i = 0; i < Songs.size(); i++) {
+            if (Songs.get(i).getSongId() == songId) {
+                Songs.set(i, song);
                 return true;
             }
         }
