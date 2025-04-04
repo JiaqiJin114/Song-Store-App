@@ -116,6 +116,7 @@ public class Driver {
     }
 
     private void listAllSongs(){
+       playlist.listAllSongs();
     }
 
 

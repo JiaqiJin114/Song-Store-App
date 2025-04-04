@@ -104,6 +104,11 @@ public class Playlist {
             if ((ans == 'y') || (ans == 'Y')){
                 result = true;
             }
+            if (result == true){
+                Songs.add(new Song(songID, songName, artistName, result, lengthOfSong));
+                System.out.println("Song Added Successfully");
+                return true;
+            }
 
         }
         return "";
@@ -162,7 +167,7 @@ public class Playlist {
     //      - returns false otherwise
     //      As this method is used inside this class, it should be private
     private boolean isValidIndex(int index){
-
+        return (index >= 0) && (index < Songs.size());
     }
 
 
@@ -225,6 +230,21 @@ public class Playlist {
     //     If the index is valid, retrieve the object and:
     //      set the verified status to the parameter value
 
+    public Song updateVerifiedStatus(int index, boolean verified) {
+        if (Song.isEmpty()) {
+            System.out.println("No Song in the list");
+        }else {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter the ID of the song which you want to update: ");
+            int songID = sc.nextInt();
+            for (Song song : Song) {
+                if (song.getSongId() == songID) {
+                    song.setVerified(verified);
+                }
+            }
+        }
+    }
+
 
 
     //-------------------------------------
@@ -263,9 +283,33 @@ public class Playlist {
     //     the total time (in seconds) if the there are songs in the playlist
     //     -1 if playlist is empty.
 
-    //TODO Add a method getAverageSongLength() which returns a integer value of
+    public int getTotalPlayListLength() {
+        int totalLength = 0;
+        if (Song.isEmpty()) {
+            System.out.println("No Song in the list");
+        }else {
+            for (Song song : Song) {
+                totalLength += song.getLength();
+            }
+        }
+        return totalLength;
+    }
+
+    //TODO //Add a method getAverageSongLength() which returns a integer value of
     //      the average length of songs on the playlist
     //     -1 if playlist is empty.
+    public int getAverageSongLength() {
+        int totalLength = 0;
+        if (Song.isEmpty()) {
+            System.out.println("No Song in the list");
+        }else {
+            for (Song song : Song) {
+                totalLength += song.getLength();
+            }
+        }
+        return totalLength / Song.size();
+    }
+    
 
     //------------------------------------
     // LISTING METHODS - Basic and Advanced
@@ -277,12 +321,12 @@ public class Playlist {
     //        0: song 1 Details
     //        1: song 2 Details
     //    If there are no songs stored in the array list, return a string that contains "No songs in playlist.".
-    public String listSong() {
-        if (Song.isEmpty()) {
+    public String listAllSongs() {
+        if (Songs.isEmpty()) {
             System.out.println("No Song in the list");
         }
-        for (int i = 0; i < Song.size(); i++) {
-            System.out.println(Song.get(i));
+        for (int i = 0; i < Songs.size(); i++) {
+            System.out.println(Songs.get(i));
         }
 
         return "";
@@ -299,7 +343,7 @@ public class Playlist {
     //    If there are songs in the playlist but none with a verified artist, the return string should
     //    have "There are no songs from verified artists on this playlist".
     public String listVerifiedArtistSong() {
-        if (Song.isEmpty()) {
+        if (Songs.isEmpty()) {
             System.out.println("No Song in the list");
         }else {
             for (Song song : Song) {
@@ -325,16 +369,16 @@ public class Playlist {
     public int SearchLongTimeSong() {
         Scanner sc = new Scanner(System.in);
         int numbers = 0 ;
-        if (Song.isEmpty()) {
+        if (Songs.isEmpty()) {
             System.out.println("No Song in the list");
         }else {
             System.out.println("Enter the limit of the song length : ");
             int limit = sc.nextInt();
-            for (Song song : Song) {
+            for (Song song : Songs) {
                 if (song.getLength() <= limit) {
                     numbers++;
                 }
-            }
+
         }
         return numbers;
     }
@@ -351,19 +395,21 @@ public class Playlist {
     //     If there are songs in the playlist, but none by verified artists, then
     //     "There are no  songs on this playlist by   'artist supplied' " should be returned.
     public String listArtistSong() {
-        if (Song.size() == 0) {
+        if (Songs.size() == 0) {
             System.out.println("No Song in the list");
-        }else {
-            Scanner sc = new Scanner(System.in);
+        }
+        else {
             System.out.print("Enter the name of the Artist who you want to list his or her song : ");
             String ArtistName = sc.next();
-            for (Song song : Song) {
+            for (Song song : Songs) {
                 if (song.getArtist().equals(ArtistName)) {
                     System.out.println(song);
                 }
             }
+            return "";
         }
-        return "";
+
+
     }
 
 
@@ -395,8 +441,8 @@ public class Playlist {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the code of the song you want to search : ");
         int songID = sc.nextInt();
-        for (int i = 0; i < Song.size(); i++) {
-            Song song = Song.get(i);
+        for (int i = 0; i < Songs.size(); i++) {
+            Song song = Songs.get(i);
             if(song.getSongId() == songID){
                 return song;
             }
@@ -441,11 +487,11 @@ public class Playlist {
     //    If there are no songs whose name contains the supplied string, the return string should
     //    have "No songs found for this artist.
     public String searchSongsByArtistName(String ArtistName) {
-        Scanner sc = new Scanner(System.in);
+
         System.out.print("Enter the ArtistName of the song you want to search : ");
-        for (int i = 0; i < Song.size(); i++) {
-            if (Song.get(i).getName() == ArtistName) {
-                return Song.get(i).toString();
+        for (int i = 0; i < Songs.size(); i++) {
+            if (SongS.get(i).getName() == ArtistName) {
+                return Songs.get(i).toString();
                 break;
             }
         }return"";
@@ -462,5 +508,45 @@ public class Playlist {
     //    This method returns true if the value passed as a parameter is a valid index in the arraylist.
     //    However, if the index is not valid, false is returned.
 
+
+        private boolean isValidIndex(int index) {
+            if (index >= 0 && index < Songs.size()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private Song findSong(int code) {
+            for (Song song : Songs) {
+                if (song.getSongId() == code) {
+                    return song;
+                }
+            }
+            return null;
+        }
+
+        private Song findSong(String name) {
+            for (Song song : Songs) {
+                if (song.getName().equals(name)) {
+                    return song;
+                }
+            }
+            return null;
+        }
+
+
+        public String listSong() {
+            if (Songs.isEmpty()) {
+                return "No songs in the playlist";
+            } else {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < Songs.size(); i++) {
+                    sb.append(i + 1).append(": ").append(Songs.get(i).getName()).append("\n");
+                }
+                return sb.toString();
+            }
+        }
+    }
 
 }
