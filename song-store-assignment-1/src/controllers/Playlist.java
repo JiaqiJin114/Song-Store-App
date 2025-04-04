@@ -11,13 +11,13 @@ public class Playlist {
     Scanner sc = new Scanner(System.in);
 
     //TODO Declare an array list of songs(songs). This should be empty at the start and does not need to be the constructor.
-    private ArrayList<Song> Song = new ArrayList<Song>();// should start empty
+    private ArrayList<Song> Songs = new ArrayList<Song>();// should start empty
 
     //TODO playlist name (String playlistName) of the playlist in the system in the system is entered by the user.
     //     Default value is "".
     //     When creating the playlist, truncate the name to 20 characters.
     //     When updating an existing playlist, only update the name if it is 20 characters or less.
-    private String playListName = ""; // valid length is 20 - default to the first 20 characters of input.
+    private String playlistName = ""; // valid length is 20 - default to the first 20 characters of input.
 
     //TODO The playlist description (String description) of the playlist in the system is entered by the user.
     //     Default value is "".
@@ -33,25 +33,35 @@ public class Playlist {
     //     The order of the fields in the parameter list is the same as the order of fields above i.e. playlistName is
     //     first, then description.
     public Playlist(String playListName, String description) {
-        this.playListName = playListName;
-        this.description = description;
+        this.playlistName = limit(playListName, 20);
+        this.description = limit(description, 30);
+    }
+
+    private String limit(String string, int length){
+        if(string == null){
+            return "";
+        }
+        if(string.length() > length){
+            return string.substring(0,length);
+        }
+        return string;
     }
 
     //TODO Add a getter and setter for each field, that adheres to the above validation rules
-    public ArrayList<Song> getSong() {
-        return Song;
+    public ArrayList<Song> getSongs() {
+        return Songs;
     }
 
-    public void setSong(ArrayList<Song> song) {
-        Song = song;
+    public void setSongs(ArrayList<Song> songs) {
+        Songs = songs;
     }
 
-    public String getPlayListName() {
-        return playListName;
+    public String getPlaylistName() {
+        return playlistName;
     }
 
-    public void setPlayListName(String playListName) {
-        this.playListName = playListName;
+    public void setPlaylistName(String playlistName) {
+        this.playlistName = playlistName;
     }
 
     public String getDescription() {
@@ -67,7 +77,9 @@ public class Playlist {
     }
 
     public void setLikes(int likes) {
-        this.likes = likes;
+        while (likes >= 0){
+            this.likes = likes;
+        }
     }
 
     //-------------------------------------
@@ -77,7 +89,7 @@ public class Playlist {
     //TODO Add a method, addSong(Song). The return type is boolean.
     //     This method will add the song object, passed as a parameter to the arraylist of songs.
     //     If the add was successful, return true, otherwise, return false.
-    private boolean addSong(Song song) {
+    public boolean addSong(Song song) {
         int num = sc.nextInt();
         for (int i = 0; i < num; i++) {
             System.out.print("Enter Song ID: ");
@@ -111,7 +123,7 @@ public class Playlist {
     //     The other parameter is a  Song object - that is being updated
     //     i.e. it holds the new values of  id, name, length, and artist.
     //     If the update was successful, then return true.
-    private boolean updateSong(int songId , Song song) {
+    public boolean updateSong(int songId , Song song) {
         for (int i = 0; i < Song.size(); i++) {
             if (Song.get(i).getSongId() == songId) {
                 Song.set(i, song);
@@ -125,7 +137,7 @@ public class Playlist {
     //     This method takes in the index of the song object that you want to delete.
     //     If the index is invalid (i.e. there is no song object at that location), return null.
     //     If the index is valid, remove the object at that index location.  Return the object you just deleted.
-    private Song deleteSong(int index) {
+    public Song deleteSong(int index) {
         if (Song.isEmpty()) {
             System.out.println("No Song in the list");
         }else {
@@ -144,8 +156,8 @@ public class Playlist {
 
     //TODO  Add a method  addLike() (no parameter) with return type void.
     //      This method simply adds 1 to the likes variable.
-    private void addLike(){
-        likes = likes + 1;
+    public void addLike(){
+        likes ++;
     }
 
     //-------------------------------------
@@ -165,7 +177,7 @@ public class Playlist {
     //       - if the supplied index is valid, the Song object at that location is returned
     //       - if the supplied index is invalid, null is returned
     //
-    public Song findSong(int code) {
+    private Song findSong(int code) {
         if (Song.isEmpty()) {
             System.out.println("No Song in the list");
         }else {
