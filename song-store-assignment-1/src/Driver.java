@@ -9,8 +9,11 @@ public class Driver {
     private Playlist playlist;
 
     public static void main(String[] args) {
-        Driver driver = new Driver();
-        driver.runMenu();
+        new Driver();
+    }
+
+    public Driver(){
+        runMenu();
     }
 
     //TODO Refer to the tutors instructions for building this class and for the menu.  You are free to deviate in any way
@@ -25,7 +28,7 @@ public class Driver {
     //----------------------------------------------------------------------------
     // Private methods for displaying the menu and processing the selected options
     //----------------------------------------------------------------------------
-    private  int mainMenu() {
+    private int mainMenu() {
         Scanner sc = new Scanner(System.in);
         System.out.print("""
                 ---------------------------------------------------------------------
@@ -59,16 +62,9 @@ public class Driver {
         ==>> """);
         System.out.print("Please enter your choice : ");
         int option = sc.nextInt();
-        System.out.println("---------------------------------------");
         return option;
     }
 
-    private void printAverageLength(){
-
-    }
-    private void printLengthOfPlaylist(){
-
-    }
     private void runMenu() {
         Scanner sc= new Scanner(System.in);
         int option = mainMenu();
@@ -142,10 +138,6 @@ public class Driver {
         }
     }
 
-
-
-
-
     private void updateSong() {
         Scanner sc = new Scanner(System.in);
         System.out.print("""
@@ -215,6 +207,13 @@ public class Driver {
     }
 
     private void load(){
+
+    }
+
+    private void printAverageLength(){
+
+    }
+    private void printLengthOfPlaylist(){
 
     }
 

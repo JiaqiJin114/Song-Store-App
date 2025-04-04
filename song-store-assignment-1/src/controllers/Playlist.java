@@ -7,37 +7,68 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Playlist {
-    private String playlistName; // valid length is 20 - default to the first 20 characters of input.
-    private ArrayList<Song> Song = new ArrayList<Song>();// should start empty
-    private String description; // valid length is 30 - default to the first 30 characters of input.
 
-    private int likes = 0;
+    Scanner sc = new Scanner(System.in);
 
     //TODO Declare an array list of songs(songs). This should be empty at the start and does not need to be the constructor.
+    private ArrayList<Song> Song = new ArrayList<Song>();// should start empty
 
     //TODO playlist name (String playlistName) of the playlist in the system in the system is entered by the user.
     //     Default value is "".
     //     When creating the playlist, truncate the name to 20 characters.
     //     When updating an existing playlist, only update the name if it is 20 characters or less.
-
-
-
+    private String playListName = ""; // valid length is 20 - default to the first 20 characters of input.
 
     //TODO The playlist description (String description) of the playlist in the system is entered by the user.
     //     Default value is "".
     //     When creating the playlist, truncate the description to 30 characters.
     //     When updating an existing playlist, only update the description if it is 30 characters or less.
+    private String description = ""; // valid length is 30 - default to the first 30 characters of input.
 
     //TODO The number of likes a playlist has (int likes)
     //    This should start at 0 and not be part of the constructor
-
-
+    private int likes = 0;
 
     //TODO Add the constructor, Playlist(String, String), that adheres to the above validation rules.
     //     The order of the fields in the parameter list is the same as the order of fields above i.e. playlistName is
     //     first, then description.
+    public Playlist(String playListName, String description) {
+        this.playListName = playListName;
+        this.description = description;
+    }
 
     //TODO Add a getter and setter for each field, that adheres to the above validation rules
+    public ArrayList<Song> getSong() {
+        return Song;
+    }
+
+    public void setSong(ArrayList<Song> song) {
+        Song = song;
+    }
+
+    public String getPlayListName() {
+        return playListName;
+    }
+
+    public void setPlayListName(String playListName) {
+        this.playListName = playListName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
 
     //-------------------------------------
     //  ARRAYLIST CRUD
@@ -46,9 +77,7 @@ public class Playlist {
     //TODO Add a method, addSong(Song). The return type is boolean.
     //     This method will add the song object, passed as a parameter to the arraylist of songs.
     //     If the add was successful, return true, otherwise, return false.
-    public String addSong() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("How many Song do you want to add?: ");
+    private boolean addSong(Song song) {
         int num = sc.nextInt();
         for (int i = 0; i < num; i++) {
             System.out.print("Enter Song ID: ");
@@ -82,7 +111,7 @@ public class Playlist {
     //     The other parameter is a  Song object - that is being updated
     //     i.e. it holds the new values of  id, name, length, and artist.
     //     If the update was successful, then return true.
-    public boolean updateSong(int songId , Song song) {
+    private boolean updateSong(int songId , Song song) {
         for (int i = 0; i < Song.size(); i++) {
             if (Song.get(i).getSongId() == songId) {
                 Song.set(i, song);
@@ -92,17 +121,14 @@ public class Playlist {
         return false;
     }
 
-
-
     //TODO Add a method, deleteSong(int).  The return type is Song.
     //     This method takes in the index of the song object that you want to delete.
     //     If the index is invalid (i.e. there is no song object at that location), return null.
     //     If the index is valid, remove the object at that index location.  Return the object you just deleted.
-    public String removeSong() {
-        if (Song.size() == 0) {
+    private Song deleteSong(int index) {
+        if (Song.isEmpty()) {
             System.out.println("No Song in the list");
-        }
-        if (Song.size() != 0) {
+        }else {
             Scanner sc = new Scanner(System.in);
             System.out.print("How many Song do you want to remove?: ");
             int num = sc.nextInt();
@@ -118,6 +144,9 @@ public class Playlist {
 
     //TODO  Add a method  addLike() (no parameter) with return type void.
     //      This method simply adds 1 to the likes variable.
+    private void addLike(){
+        likes = likes + 1;
+    }
 
     //-------------------------------------
     //  ARRAYLIST - Utility methods
@@ -127,23 +156,25 @@ public class Playlist {
     //      - returns true if the index is valid for the songs arrayList (in range)
     //      - returns false otherwise
     //      As this method is used inside this class, it should be private
+    private boolean isValidIndex(int index){
+
+    }
 
 
     //TODO  Add a method  findSong(int) which returns a Song object:
     //       - if the supplied index is valid, the Song object at that location is returned
     //       - if the supplied index is invalid, null is returned
     //
-    public String findSong(int code) {
-        if (Song.size() == 0) {
+    public Song findSong(int code) {
+        if (Song.isEmpty()) {
             System.out.println("No Song in the list");
-        }
-        if (Song.size() != 0) {
+        }else {
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter the code of the song you want to search : ");
             code = sc.nextInt();
-            for (int i = 0; i < Song.size(); i++) {
-                if (Song.get(i).getSongId()==code) {
-                    System.out.println(Song.get(i));
+            for (Song song : Song) {
+                if (song.getSongId() == code) {
+                    System.out.println(song);
                 } else {
                     System.out.println("Song Not Found");
                     break;
@@ -152,21 +183,21 @@ public class Playlist {
         }
         return "";
     }
+
     //TODO  Add a method  findSong(String) which returns a Song object:
     //       - if the supplied string (songName) matches a song name in the songs list,   the Song object that matches that name  is returned
     //       - if the supplied string (songName) does not match a song name in the songs list, null is returned
     //       NOTE - if that name appears more than once, it is sufficient to return the first occurence.
-    public String findSong(String name) {
-        if (Song.size() == 0) {
+    public Song findSong(String name) {
+        if (Song.isEmpty()) {
             System.out.println("No Song in the list");
-        }
-        if (Song.size() != 0) {
+        }else {
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter the name of the song you want to search : ");
             String SongName = sc.nextLine();
-            for (int i = 0; i < Song.size(); i++) {
-                if (Song.get(i).getName().equals(SongName)) {
-                    System.out.println(Song.get(i));
+            for (Song song : Song) {
+                if (song.getName().equals(SongName)) {
+                    System.out.println(song);
                 } else {
                     System.out.println("Song Not Found");
                     break;
@@ -210,13 +241,11 @@ public class Playlist {
     //     This method returns the number of song objects in the array list that have a length of <= 180.
     public int SearchShortTimeSong() {
         int numbers = 0 ;
-        if (Song.size() == 0) {
+        if (Song.isEmpty()) {
             System.out.println("No Song in the list");
-        }
-        if (Song.size() != 0) {
-            for (int i = 0; i < Song.size(); i++) {
-                Song song = Song.get(i);
-                if (song.getLength() <= 180 ) {
+        }else {
+            for (Song song : Song) {
+                if (song.getLength() <= 180) {
                     numbers++;
                 }
             }
@@ -265,14 +294,12 @@ public class Playlist {
     //    If there are songs in the playlist but none with a verified artist, the return string should
     //    have "There are no songs from verified artists on this playlist".
     public String listVerifiedArtistSong() {
-        if (Song.size() == 0) {
+        if (Song.isEmpty()) {
             System.out.println("No Song in the list");
-        }
-        if (Song.size() != 0) {
-            for (int i = 0; i < Song.size(); i++) {
-                Song song = Song.get(i);
+        }else {
+            for (Song song : Song) {
                 if (song.getArtist().isVerified()) {
-                    System.out.println(Song.get(i));
+                    System.out.println(song);
                 }
             }
         }
@@ -293,15 +320,13 @@ public class Playlist {
     public int SearchLongTimeSong() {
         Scanner sc = new Scanner(System.in);
         int numbers = 0 ;
-        if (Song.size() == 0) {
+        if (Song.isEmpty()) {
             System.out.println("No Song in the list");
-        }
-        if (Song.size() != 0) {
+        }else {
             System.out.println("Enter the limit of the song length : ");
             int limit = sc.nextInt();
-            for (int i = 0; i < Song.size(); i++) {
-                Song song = Song.get(i);
-                if (song.getLength() <= limit ) {
+            for (Song song : Song) {
+                if (song.getLength() <= limit) {
                     numbers++;
                 }
             }
@@ -323,14 +348,13 @@ public class Playlist {
     public String listArtistSong() {
         if (Song.size() == 0) {
             System.out.println("No Song in the list");
-        }
-        if (Song.size() != 0) {
+        }else {
             Scanner sc = new Scanner(System.in);
             System.out.print("Enter the name of the Artist who you want to list his or her song : ");
             String ArtistName = sc.next();
-            for (int i = 0; i < Song.size(); i++) {
-                if (Song.get(i).getArtist().equals(ArtistName)) {
-                    System.out.println(Song.get(i));
+            for (Song song : Song) {
+                if (song.getArtist().equals(ArtistName)) {
+                    System.out.println(song);
                 }
             }
         }

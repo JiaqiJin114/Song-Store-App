@@ -9,7 +9,7 @@ public class Artist {
     //     Default value is "".
     //     When creating the Artist, truncate the name to 15 characters.
     //     When updating an existing Artist, only update the name if it is 15 characters or less.
-    private String artistName;
+    private String artistName = "";
 
 
     //TODO The verified status (boolean verified)  Default is false.
@@ -19,6 +19,16 @@ public class Artist {
 
     //TODO Add the constructor, Artist(String, boolean), that adheres to the above validation rules
 
+
+    public Artist(String artistName, boolean verified) {
+        while (artistName.length() < 15){
+            this.artistName = artistName;
+        }
+        this.verified = verified;
+    }
+
+
+    //TODO Add a getter and setter for each field, that adheres to the above validation rules
     public boolean isVerified() {
         return verified;
     }
@@ -27,22 +37,14 @@ public class Artist {
         this.verified = verified;
     }
 
-
-
-    public Artist(String artistName, boolean verified) {
-        this.artistName = artistName;
-        this.verified = verified;
-    }
-
-    //TODO Add a getter and setter for each field, that adheres to the above validation rules
     public String getArtistName() {
         return artistName;
     }
 
     public void setArtistName(String artistName) {
         this.artistName = artistName;
-
     }
+
     //TODO Add a generated equals method.
     @Override
     public boolean equals(Object o) {
@@ -50,13 +52,6 @@ public class Artist {
         Artist artist = (Artist) o;
         return isVerified() == artist.isVerified() && Objects.equals(getArtistName(), artist.getArtistName());
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getArtistName(), isVerified());
-    }
-
-
 
     //TODO The toString should return the string in this format:
     //      Taylor Swift is a verified artist  OR
