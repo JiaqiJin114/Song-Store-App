@@ -16,17 +16,23 @@ public class Artist {
     private boolean verified;
 
 
-
     //TODO Add the constructor, Artist(String, boolean), that adheres to the above validation rules
 
 
     public Artist(String artistName, boolean verified) {
-        while (artistName.length() < 15){
-            this.artistName = artistName;
-        }
+        this.artistName = limit(artistName, 15);
         this.verified = verified;
     }
 
+    private String limit(String string, int length){
+        if(string == null){
+            return "";
+        }
+        if(string.length() > length){
+            return string.substring(0,length);
+        }
+        return string;
+    }
 
     //TODO Add a getter and setter for each field, that adheres to the above validation rules
     public boolean isVerified() {
@@ -42,7 +48,7 @@ public class Artist {
     }
 
     public void setArtistName(String artistName) {
-        this.artistName = artistName;
+        this.artistName = limit(artistName, 15);
     }
 
     //TODO Add a generated equals method.

@@ -16,35 +16,50 @@ public class Song {
     //TODO The song's artist (Artist artist)
     //    You should have already written the Artist class
     //     When creating the song, you should have the artist object as a parameter
-    private Artist artist;
+    private Artist artist = new Artist("", false);
 
     //TODO The length of the song in seconds (int length) is between 1 and 600. Default is 1.
     private int length = 1;
 
-
     //TODO Add the constructor, Song(int, String, Artist), that adheres to the above validation rules
-    public Song(int songId, String name, Artist artist) {
-        while (songId >= 1000 && songId <= 9999){
-            this.songId = songId;
-        }
-
-        while (name.length() <= 20){
-            this.name = name;
-        }
-
-        this.artist = artist;
+    public Song(int songId, String name,Artist artist, int length) {
+        this.songId = validateSongId(songId);
+        this.name = limitString(name, 20);
+        this.artist = artist = new Artist("", false);
+        this.length = validateLength(length);
     }
 
-    public Song() {}
+    private int validateSongId(int songId) {
+        if (songId < 1000 || songId > 9999) {
+            return 9999;
+        }
+        return songId;
+    }
 
+    private int validateLength(int length) {
+        if (length < 1 || length > 600) {
+            return 1;
+        }
+        return length;
+    }
+
+    private String limitString(String string, int length){
+        if(string == null){
+            return "";
+        }
+        if(string.length() > length){
+            return string.substring(0,length);
+        }
+        return string;
+    }
 
     //TODO Add a getter and setter for each field, that adheres to the above validation rules
     public void setSongId(int songId) {
-        this.songId = songId;
+        this.songId = validateSongId(songId);
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = limitString(name, 20);
     }
 
     public void setArtist(Artist artist) {
@@ -52,9 +67,7 @@ public class Song {
     }
 
     public void setLength(int length) {
-        while (length > 1 && length < 600){
-            this.length = length;
-        }
+        this.length = validateLength(length);
     }
 
     public Artist getArtist() {
@@ -72,7 +85,6 @@ public class Song {
     public int getSongId() {
         return songId;
     }
-
 
     //TODO Add a generated equals method.
     @Override
