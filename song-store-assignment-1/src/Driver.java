@@ -11,6 +11,8 @@ import java.util.Scanner;
 
 public class Driver {
 
+    Scanner sc = new Scanner(System.in);
+
     //TODO Define an object of the Playlist here.  It should be declared private.
     private Playlist playlist;
 
@@ -101,27 +103,23 @@ public class Driver {
     //------------------------------------
 
     private void addSong() {
-        System.out.print("How many songs would you like to add? ");
-        Scanner sc = new Scanner(System.in);
-        int songNumbers = sc.nextInt();
+        listAllSongs();
+        int songNumbers = ScannerInput.readNextInt("How many songs would you like to add? ");
         for (int i = 0; i < songNumbers; i++) {
-
            int songId = ScannerInput.readNextInt("Enter song index : ");
-           System.out.print("Enter song name : ");
-           String songName = sc.next();
-           System.out.print("Enter artist name : ");
-           String artistName = sc.next();
-            System.out.print("Is this Song Verified? (y/n): ");
-            char ans = sc.next().charAt(0);
-            boolean result = false;
-            if (ans == 'y' || ans == 'Y') {
-                result = true;
-            }
-           System.out.print("Enter length : ");
-           int length = sc.nextInt();
+           String songName = ScannerInput.readNextLine("Enter song name : ");
+           String artistName = ScannerInput.readNextLine("Enter artist name :  ");;
+           System.out.print("Is this Song Verified? (y/n): ");
+           char ans = sc.next().charAt(0);
+           boolean result = false;
+           if (ans == 'y' || ans == 'Y') {
+               result = true;
+           }
+           int length = ScannerInput.readNextInt("Enter length : ");
             Song song = new Song(songId,songName,artistName,result,length);
            playlist.addSong(song);
         }
+        runMenu();
     }
 
     private void listAllSongs(){
@@ -129,10 +127,22 @@ public class Driver {
     }
 
     private void updateSong() {
-        System.out.println("Enter the index of the song you want to update");
+        listAllSongs();
         int index = ScannerInput.readNextInt("Enter the index of the song you want to update");
-        playlist.updateSong(index, new Song(index, "New Song Name", "New Artist Name", true, 100));
+        int songId = ScannerInput.readNextInt("Enter song index : ");
+        String songName = ScannerInput.readNextLine("Enter song name : ");
+        String artistName = ScannerInput.readNextLine("Enter artist name :  ");;
+        System.out.print("Is this Song Verified? (y/n): ");
+        char ans = sc.next().charAt(0);
+        boolean result = false;
+        if (ans == 'y' || ans == 'Y') {
+            result = true;
+        }
+        int length = ScannerInput.readNextInt("Enter length : ");
+        Song song = new Song(songId,songName,artistName,result,length);
+        playlist.updateSong(index, song);
     }
+
     private void deleteSong() {
         listAllSongs();
         int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
@@ -171,7 +181,7 @@ public class Driver {
         System.out.println("Searching for a song by name");
         System.out.println("Enter the name of the song you want to search");
         String name = ScannerInput.readNextLine("Enter the name of the song you want to search");
-        playlist.searchSongsByName(name);
+        System.out.println(playlist.searchSongsByName(name));
     }
 
     //-----------------------------
@@ -190,17 +200,17 @@ public class Driver {
 
     private void listSongsByVerifiedArtists(){
         System.out.println("Listing songs of verified artists");
-        System.out.println();
+        System.out.println(playlist.listSongsFromVerifiedArtists());
     }
 
     private void listSongsOverGivenLength(){
         int length = ScannerInput.readNextInt("Enter the length of the song you want to search");
-        //System.out.println(playlist.SearchLongTimeSong(length));
-        //if (length > 0){
-        //    System.out.println("Song found: " + length);
-        //} else {
-        //    System.out.println("Song not found");
-        //}
+        System.out.println(playlist.listSongsLongerThan(length));
+        if (length > 0){
+            System.out.println("Song found: " + length);
+        } else {
+            System.out.println("Song not found");
+        }
     }
 
     private void printAverageLength(){

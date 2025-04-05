@@ -139,7 +139,7 @@ public class Playlist {
     //      - returns true if the index is valid for the songs arrayList (in range)
     //      - returns false otherwise
     //      As this method is used inside this class, it should be private
-    boolean isValidIndex(int index) {
+    private boolean isValidIndex(int index) {
         return index >= 0 && index < Songs.size();
     }
 
@@ -409,44 +409,42 @@ public class Playlist {
 
     }
 
-        //TODO Add a method, searchSongsByArtistName(String).  The return type is String.
-        //    This method returns a list of songs whose artist name contains the string passed
-        //    as a parameter.
-        //    Each song should be on a new line and should contain the song name and code e.g.
-        //        Flowers (45343)
-        //        Wrecking Ball (65434)
-        //    If there are no songs stored in the array list, return a string that contains "No songs".
-        //    If there are no songs whose name contains the supplied string, the return string should
-        //    have "No songs found for this artist.
-        public String searchSongsByArtistName(String artistName) {
-            if (Songs.isEmpty()) {
-                return "No songs.";
-            }
-            StringBuilder sb = new StringBuilder();
-            boolean found = false;
-            for (int i = 0; i < Songs.size(); i++) {
-                if (Songs.get(i).getName().toLowerCase().contains(artistName.toLowerCase())) {
-                    sb.append(Songs.get(i).getName()).append(" (").append(Songs.get(i).getSongId()).append(")\n");
-                    found = true;
-                }
-            }
-            if (!found) {
-                return "No songs found for this artist.";
-            }
-            return sb.toString();
+    //TODO Add a method, searchSongsByArtistName(String).  The return type is String.
+    //    This method returns a list of songs whose artist name contains the string passed
+    //    as a parameter.
+    //    Each song should be on a new line and should contain the song name and code e.g.
+    //        Flowers (45343)
+    //        Wrecking Ball (65434)
+    //    If there are no songs stored in the array list, return a string that contains "No songs".
+    //    If there are no songs whose name contains the supplied string, the return string should
+    //    have "No songs found for this artist.
+    public String searchSongsByArtistName(String artistName) {
+        if (Songs.isEmpty()) {
+            return "No songs.";
         }
-
-
-
+        StringBuilder sb = new StringBuilder();
+        boolean found = false;
+        for (int i = 0; i < Songs.size(); i++) {
+            if (Songs.get(i).getName().toLowerCase().contains(artistName.toLowerCase())) {
+                sb.append(Songs.get(i).getName()).append(" (").append(Songs.get(i).getSongId()).append(")\n");
+                found = true;
+            }
+        }
+        if (!found) {
+            return "No songs found for this artist.";
+        }
+        return sb.toString();
+    }
 
     //-------------------------
     // HELPER METHODS
     //-------------------------
-
     //TODO Add a method, isValidIndex(int).  The return type is boolean.
     //    This method returns true if the value passed as a parameter is a valid index in the arraylist.
     //    However, if the index is not valid, false is returned.
-
+    public boolean isValidIndex(int index){
+        return index >= 0 && index < numSongs();
+    }
 
 
 }
