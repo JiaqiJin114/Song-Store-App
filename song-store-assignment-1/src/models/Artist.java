@@ -66,10 +66,7 @@ public class Artist {
 
     @Override
     public String toString() {
-        return "Artist{" +
-                "artistName='" + artistName + '\'' +
-                ", verified=" + verified +
-                '}';
+        return artistName + (verified ? " is a verified artist" : " is not a verified artist");
     }
 
 }

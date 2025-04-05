@@ -21,6 +21,7 @@ public class Driver {
     }
 
     public Driver(){
+        playlist = new Playlist("", "");
         mainMenu();
         runMenu();
     }
@@ -72,28 +73,40 @@ public class Driver {
     }
 
     private void runMenu() {
-        int choice = ScannerInput.readNextInt("Please enter your choice : ");
-        if(choice!= 0) {
-            switch (choice) {
-                case 1 -> addSong();
-                case 2 -> listAllSongs();
-                case 3 -> updateSong();
-                case 4 -> deleteSong();
-                case 5 -> setVerifiedStatus();
-                case 6 -> findSongById();
-                case 7 -> searchSongByName();
-                case 8 -> addLikeToPlaylist();
-                case 9 -> listSongsByVerifiedArtists();
-                case 10 -> listSongsOverGivenLength();
-                case 11 -> listSongsOfGivenArtist();
-                case 12 -> printAverageLength();
-                case 13 -> printLengthOfPlaylist();
-                case 20 -> save();
-                case 21 -> load();
+        while (true) {
+            try {
+                int choice = ScannerInput.readNextInt("Please enter your choice : ");
+                if (choice != 0) {
+                    handleChoice(choice);
+                    ScannerInput.readNextLine(("Press Enter to continue...")); // 等待用户按下回车键
+                } else {
+                    System.out.println("Exiting...bye");
+                    break; // 退出循环
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please try again.");
             }
-            System.out.print("\nPress enter key to continue...");
-        }else {
-        System.out.println("Exiting...bye");
+        }
+    }
+
+    private void handleChoice(int choice) {
+        switch (choice) {
+            case 1 -> addSong();
+            case 2 -> listAllSongs();
+            case 3 -> updateSong();
+            case 4 -> deleteSong();
+            case 5 -> setVerifiedStatus();
+            case 6 -> findSongById();
+            case 7 -> searchSongByName();
+            case 8 -> addLikeToPlaylist();
+            case 9 -> listSongsByVerifiedArtists();
+            case 10 -> listSongsOverGivenLength();
+            case 11 -> listSongsOfGivenArtist();
+            case 12 -> printAverageLength();
+            case 13 -> printLengthOfPlaylist();
+            case 20 -> save();
+            case 21 -> load();
+            default -> System.out.println("Invalid choice. Please try again.");
         }
     }
 
@@ -118,6 +131,11 @@ public class Driver {
            int length = ScannerInput.readNextInt("Enter length : ");
             Song song = new Song(songId,songName,artistName,result,length);
            playlist.addSong(song);
+            if (playlist.addSong(song)) {
+                System.out.println("Song added successfully: " + song.toString());
+            } else {
+                System.out.println("Failed to add song.");
+            }
         }
         runMenu();
     }

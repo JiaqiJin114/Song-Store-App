@@ -161,7 +161,7 @@ public class Playlist {
     //       NOTE - if that name appears more than once, it is sufficient to return the first occurence.
     public Song findSong(String songName) {
         for (Song song : Songs) {
-            if (Song.getName().equalsIgnoreCase(songName)) {
+            if (song != null && song.getName() != null && song.getName().equalsIgnoreCase(songName)) {
                 return song;
             }
         }
