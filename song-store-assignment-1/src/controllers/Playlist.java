@@ -107,10 +107,12 @@ public class Playlist {
     //     i.e. it holds the new values of  id, name, length, and artist.
     //     If the update was successful, then return true.
     public boolean updateSong(int index, Song song) {
-        if (isValidIndex(index) && (song != null)) {
+        if (song != null) {
             Songs.set(index, song);
+            System.out.println("Song updated successfully");
             return true;
         }
+        System.out.println("Song not updated");
         return false;
     }
 
@@ -119,10 +121,12 @@ public class Playlist {
     //     If the index is invalid (i.e. there is no song object at that location), return null.
     //     If the index is valid, remove the object at that index location.  Return the object you just deleted.
     public Song deleteSong(int index) {
-        if (isValidIndex(index)) {
-            return Songs.remove(index);
+        if (index < 0 || index >= Songs.size()) {
+            return null; //
         }
-        return null;
+        Song removedSong = Songs.get(index);
+        Songs.remove(index);
+        return removedSong;
     }
 
     //TODO  Add a method  addLike() (no parameter) with return type void.
@@ -139,7 +143,7 @@ public class Playlist {
     //      - returns true if the index is valid for the songs arrayList (in range)
     //      - returns false otherwise
     //      As this method is used inside this class, it should be private
-    private boolean isValidIndex(int index) {
+    private boolean IsValidIndex(int index) {
         return index >= 0 && index < Songs.size();
     }
 
@@ -253,15 +257,19 @@ public class Playlist {
     //        1: song 2 Details
     //    If there are no songs stored in the array list, return a string that contains "No songs in playlist.".
     public String listSongs() {
+        StringBuilder sb = new StringBuilder();
         if (Songs.isEmpty()) {
             return "No songs in playlist.";
+        } else {
+            for (int i = 0; i < Songs.size() ; i++) {
+                sb.append(i).append(": ").append(Songs.get(i).toString()).append("\n");
+            }
+            System.out.println(sb);
+            return "";
         }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < Songs.size(); i++) {
-            sb.append(i).append(": ").append(Songs.get(i).toString()).append("\n");
-        }
-        return sb.toString();
+
     }
+
 
 
     //TODO Add a method, listSongsFromVerifiedArtists().  The return type is String.

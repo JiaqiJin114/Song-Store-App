@@ -74,18 +74,15 @@ public class Driver {
 
     private void runMenu() {
         while (true) {
-            try {
                 int choice = ScannerInput.readNextInt("Please enter your choice : ");
                 if (choice != 0) {
                     handleChoice(choice);
-                    ScannerInput.readNextLine(("Press Enter to continue...")); // 等待用户按下回车键
+                    ScannerInput.readNextLine(("Press Enter to continue..."));
                 } else {
                     System.out.println("Exiting...bye");
-                    break; // 退出循环
+                    break;
                 }
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please try again.");
-            }
+
         }
     }
 
@@ -130,12 +127,10 @@ public class Driver {
            }
            int length = ScannerInput.readNextInt("Enter length : ");
             Song song = new Song(songId,songName,artistName,result,length);
-           playlist.addSong(song);
-            if (playlist.addSong(song)) {
-                System.out.println("Song added successfully: " + song.toString());
-            } else {
-                System.out.println("Failed to add song.");
-            }
+            playlist.addSong(song);
+            System.out.println("Song added successfully!");
+            System.out.println(song);
+
         }
         runMenu();
     }
@@ -164,7 +159,12 @@ public class Driver {
     private void deleteSong() {
         listAllSongs();
         int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
-        playlist.deleteSong(index);
+        Song deletedSong = playlist.deleteSong(index);
+        if (deletedSong != null) {
+            System.out.println("Song deleted successfully: " + deletedSong.getName());
+        } else {
+            System.out.println("Failed to delete song. Invalid index.");
+        }
     }
 
     private void addLikeToPlaylist(){
@@ -174,7 +174,6 @@ public class Driver {
 
     private void setVerifiedStatus(){
         System.out.println("Setting verified status of a specific song's artist");
-        System.out.println("Enter the index of the song you want to update");
         int index = ScannerInput.readNextInt("Enter the index of the song you want to update");
         playlist.updateVerifiedStatus(index, true);
         System.out.println("Verified status updated successfully");
@@ -197,7 +196,6 @@ public class Driver {
 
     private void searchSongByName(){
         System.out.println("Searching for a song by name");
-        System.out.println("Enter the name of the song you want to search");
         String name = ScannerInput.readNextLine("Enter the name of the song you want to search");
         System.out.println(playlist.searchSongsByName(name));
     }
