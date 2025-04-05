@@ -93,7 +93,8 @@ public class Playlist {
     //     If the add was successful, return true, otherwise, return false.
     public boolean addSong(Song song) {
         if (song != null) {
-            return Songs.add(song);
+            Songs.add(song);
+            return true;
         }
         return false;
     }

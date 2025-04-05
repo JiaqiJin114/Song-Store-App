@@ -114,11 +114,15 @@ public class Driver {
            String songName = sc.next();
            System.out.print("Enter artist name : ");
            String artistName = sc.next();
-           System.out.print("Enter verified status : ");
-           boolean verified = sc.nextBoolean();
+            System.out.print("Is this Song Verified? (y/n): ");
+            char ans = sc.next().charAt(0);
+            boolean result = false;
+            if (ans == 'y' || ans == 'Y') {
+                result = true;
+            }
            System.out.print("Enter length : ");
            int length = sc.nextInt();
-            Song song = new Song(songId,songName,artistName,verified,length);
+            Song song = new Song(songId,songName,artistName,result,length);
            playlist.addSong(song);
 
         }
