@@ -22,7 +22,6 @@ public class Driver {
 
     public Driver(){
         playlist = new Playlist("", "");
-        mainMenu();
         runMenu();
     }
 
@@ -38,7 +37,7 @@ public class Driver {
     //----------------------------------------------------------------------------
     // Private methods for displaying the menu and processing the selected options
     //----------------------------------------------------------------------------
-    private void mainMenu() {
+    private void runMenu() {
         System.out.print("""
                 ---------------------------------------------------------------------
                 |                             SONGS APP                             |
@@ -67,22 +66,16 @@ public class Driver {
                 |   21) Load                                                        |
                 |   0) Exit                                                         |
                 ---------------------------------------------------------------------
-                ==>>
         ==>> """);
-
-    }
-
-    private void runMenu() {
         while (true) {
-                int choice = ScannerInput.readNextInt("Please enter your choice : ");
-                if (choice != 0) {
-                    handleChoice(choice);
-                    ScannerInput.readNextLine(("Press Enter to continue..."));
-                } else {
-                    System.out.println("Exiting...bye");
-                    break;
-                }
-
+            int choice = ScannerInput.readNextInt("Please enter your choice : ");
+            if (choice != 0) {
+                handleChoice(choice);
+                ScannerInput.readNextLine(("Press Enter to continue..."));
+            } else {
+                System.out.println("Exiting...bye");
+                break;
+            }
         }
     }
 
@@ -130,7 +123,6 @@ public class Driver {
             playlist.addSong(song);
             System.out.println("Song added successfully!");
             System.out.println(song);
-
         }
         runMenu();
     }
@@ -141,7 +133,7 @@ public class Driver {
 
     private void updateSong() {
         listAllSongs();
-        int index = ScannerInput.readNextInt("Enter the index of the song you want to update");
+        int index = ScannerInput.readNextInt("Enter the index of the song you want to update : ");
         int songId = ScannerInput.readNextInt("Enter song index : ");
         String songName = ScannerInput.readNextLine("Enter song name : ");
         String artistName = ScannerInput.readNextLine("Enter artist name :  ");;
@@ -158,7 +150,7 @@ public class Driver {
 
     private void deleteSong() {
         listAllSongs();
-        int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
+        int index = ScannerInput.readNextInt("Enter the index of the song you want to delete : ");
         Song deletedSong = playlist.deleteSong(index);
         if (deletedSong != null) {
             System.out.println("Song deleted successfully: " + deletedSong.getName());
@@ -174,7 +166,8 @@ public class Driver {
 
     private void setVerifiedStatus(){
         System.out.println("Setting verified status of a specific song's artist");
-        int index = ScannerInput.readNextInt("Enter the index of the song you want to update");
+        listAllSongs();
+        int index = ScannerInput.readNextInt("Enter the index of the song you want to update : ");
         playlist.updateVerifiedStatus(index, true);
         System.out.println("Verified status updated successfully");
     }
@@ -185,7 +178,7 @@ public class Driver {
 
 
     private void findSongById() {
-        int id = ScannerInput.readNextInt("Enter the ID of the song you want to find");
+        int id = ScannerInput.readNextInt("Enter the ID of the song you want to find : ");
         Song song = playlist.findSongByCode(id);
         if (song != null) {
             System.out.println("Song found: " + song.getName());
@@ -196,7 +189,7 @@ public class Driver {
 
     private void searchSongByName(){
         System.out.println("Searching for a song by name");
-        String name = ScannerInput.readNextLine("Enter the name of the song you want to search");
+        String name = ScannerInput.readNextLine("Enter the name of the song you want to search : ");
         System.out.println(playlist.searchSongsByName(name));
     }
 
@@ -205,7 +198,7 @@ public class Driver {
     // ----------------------------
 
     private void listSongsOfGivenArtist(){
-        String artistName = ScannerInput.readNextLine("Enter the name of the artist you want to search");
+        String artistName = ScannerInput.readNextLine("Enter the name of the artist you want to search : ");
         playlist.listOfSongsOfArtist(artistName);
         if (artistName.equals(artistName)){
             System.out.println("Song found: " + artistName);
@@ -220,7 +213,7 @@ public class Driver {
     }
 
     private void listSongsOverGivenLength(){
-        int length = ScannerInput.readNextInt("Enter the length of the song you want to search");
+        int length = ScannerInput.readNextInt("Enter the length of the song you want to search : ");
         System.out.println(playlist.listSongsLongerThan(length));
         if (length > 0){
             System.out.println("Song found: " + length);
@@ -252,7 +245,6 @@ public class Driver {
     //    This method uses the XStream component to deserialise the playList object and their associated artists from
     //    an XML file into the Songs array list.
     private void load(){
-
         try {
             XStream xstream = new XStream(new StaxDriver());
             FileInputStream fis = new FileInputStream("playlist.xml");

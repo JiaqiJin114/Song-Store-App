@@ -111,6 +111,8 @@ public class Playlist {
             Songs.set(index, song);
             System.out.println("Song updated successfully");
             return true;
+        }else{
+            System.out.println("There is no song in playlist.");
         }
         System.out.println("Song not updated");
         return false;
