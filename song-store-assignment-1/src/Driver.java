@@ -1,4 +1,10 @@
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import controllers.Playlist;
+import models.Song;
+import utils.ScannerInput;
+import com.thoughtworks.xstream.XStream;
+
+import java.io.*;
 
 import java.util.Scanner;
 
@@ -142,14 +148,22 @@ public class Driver {
     }
 
     private void deleteSong() {
+        listAllSongs();
+        int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
+        playlist.deleteSong(index);
     }
 
     private void addLikeToPlaylist(){
-
+        System.out.println("Adding a like to the playlist");
+        playlist.addLike();
     }
 
     private void setVerifiedStatus(){
-
+        System.out.println("Setting verified status of a specific song's artist");
+        System.out.println("Enter the index of the song you want to update");
+        int index = ScannerInput.readNextInt("Enter the index of the song you want to update");
+        playlist.updateVerifiedStatus(index, true);
+        System.out.println("Verified status updated successfully");
     }
 
     //-----------------------------------------------------------------
@@ -157,10 +171,28 @@ public class Driver {
     //-----------------------------------------------------------------
 
 
-    private void findSongById() {}
+    private void findSongById() {
+        System.out.println("Finding a song by ID");
+        System.out.println("Enter the ID of the song you want to find");
+        int id = ScannerInput.readNextInt("Enter the ID of the song you want to find");
+        Song song = playlist.findSong(id);
+        if (song != null) {
+            System.out.println("Song found: " + song.getName());
+        } else {
+            System.out.println("Song not found");
+        }
+    }
 
     private void searchSongByName(){
-
+        System.out.println("Searching for a song by name");
+        System.out.println("Enter the name of the song you want to search");
+        String name = ScannerInput.readNextLine("Enter the name of the song you want to search");
+        Song song = playlist.findSong(name);
+        if (song != null) {
+            System.out.println("Song found: " + song.getName());
+        } else {
+            System.out.println("Song not found");
+        }
     }
 
     //-----------------------------
@@ -168,18 +200,47 @@ public class Driver {
     // ----------------------------
 
     private void listSongsOfGivenArtist(){
+        System.out.println("Listing songs of a given artist");
+        System.out.println("Enter the name of the artist you want to search");
+        String artistName = ScannerInput.readNextLine("Enter the name of the artist you want to search");
+        System.out.println(playlist.listOfSongsOfArtist());
+        if (artistName.equals(artistName)){
+            System.out.println("Song found: " + artistName);
+        } else {
+            System.out.println("Song not found");
+        }
     }
 
     private void listSongsByVerifiedArtists(){
+        System.out.println("Listing songs of verified artists");
+        System.out.println(playlist.listVerifiedArtistSong());
     }
 
     private void listSongsOverGivenLength(){
+        System.out.println("Listing songs over a given length");
+        System.out.println("Enter the length of the song you want to search");
+        int length = ScannerInput.readNextInt("Enter the length of the song you want to search");
+        System.out.println(playlist.SearchLongTimeSong());
+        if (length > 0){
+            System.out.println("Song found: " + length);
+        } else {
+            System.out.println("Song not found");
+        }
     }
 
     private void printAverageLength(){
+        System.out.println("Printing average length of songs");
+        System.out.println(playlist.getAverageSongLength());
     }
 
     private void printLengthOfPlaylist(){
+        System.out.println("Printing length of playlist");
+        System.out.println(playlist.getTotalPlayListLength());
+        if (playlist.getTotalPlayListLength() > 0){
+            System.out.println("Playlist found: " + playlist.getTotalPlayListLength());
+        } else {
+            System.out.println("Playlist not found");
+        }
     }
 
     //---------------------------------
@@ -191,6 +252,20 @@ public class Driver {
     //    an XML file into the Songs array list.
     private void load(){
 
+        try {
+            XStream xstream = new XStream(new StaxDriver());
+            FileInputStream fis = new FileInputStream("playlist.xml");
+            ObjectInputStream is = xstream.createObjectInputStream(fis);
+            playlist = (Playlist) is.readObject();
+            is.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Playlist loaded successfully");
     }
 
 
@@ -198,6 +273,19 @@ public class Driver {
     //    This method uses the XStream component to serialise the playList object and their associated artists to
     //    an XML file.
     private void save(){
-
+        try {
+            XStream xstream = new XStream(new StaxDriver());
+            FileOutputStream fos = new FileOutputStream("playlist.xml");
+            ObjectOutputStream out = xstream.createObjectOutputStream(fos);
+            out.writeObject(playlist);
+            out.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Playlist saved successfully");
     }
 }

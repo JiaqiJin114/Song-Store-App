@@ -175,7 +175,7 @@ public class Playlist {
     //       - if the supplied index is valid, the Song object at that location is returned
     //       - if the supplied index is invalid, null is returned
     //
-    private Song findSong(int code) {
+    public Song findSong(int code) {
         if (Song.isEmpty()) {
             System.out.println("No Song in the list");
         }else {
@@ -309,7 +309,7 @@ public class Playlist {
         }
         return totalLength / Song.size();
     }
-    
+        
 
     //------------------------------------
     // LISTING METHODS - Basic and Advanced
@@ -378,11 +378,10 @@ public class Playlist {
                 if (song.getLength() <= limit) {
                     numbers++;
                 }
+            }
 
-        }
-        return numbers;
+        }return numbers;
     }
-
 
 
     //TODO Add a method, listOfSongsOfArtist(String).  The return type is String.
@@ -394,7 +393,7 @@ public class Playlist {
     //    If there are no songs stored in the array list, return a string that contains "No songs in playlist".
     //     If there are songs in the playlist, but none by verified artists, then
     //     "There are no  songs on this playlist by   'artist supplied' " should be returned.
-    public String listArtistSong() {
+    public String listOfSongsOfArtist() {
         if (Songs.size() == 0) {
             System.out.println("No Song in the list");
         }
@@ -408,8 +407,6 @@ public class Playlist {
             }
             return "";
         }
-
-
     }
 
 
