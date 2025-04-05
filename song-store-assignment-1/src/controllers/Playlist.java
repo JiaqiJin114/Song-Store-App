@@ -79,10 +79,9 @@ public class Playlist {
     }
 
     public void setLikes(int likes) {
-        if (likes >= 0) {
+        while (likes >= 0) {
             this.likes = likes;
         }
-
     }
 
     //-------------------------------------
@@ -140,7 +139,7 @@ public class Playlist {
     //      - returns true if the index is valid for the songs arrayList (in range)
     //      - returns false otherwise
     //      As this method is used inside this class, it should be private
-    private boolean IsValidIndex(int index) {
+    boolean isValidIndex(int index) {
         return index >= 0 && index < Songs.size();
     }
 
@@ -162,7 +161,7 @@ public class Playlist {
     //       NOTE - if that name appears more than once, it is sufficient to return the first occurence.
     public Song findSong(String songName) {
         for (Song song : Songs) {
-            if (song != null && song.getName().equalsIgnoreCase(songName)) {
+            if (Song.getName().equalsIgnoreCase(songName)) {
                 return song;
             }
         }
@@ -188,7 +187,6 @@ public class Playlist {
             song.getArtist().setVerified(verified);
             return song;
         }
-        System.out.println("Invalid index provided.");
         return null;
     }
 
@@ -254,7 +252,7 @@ public class Playlist {
     //        0: song 1 Details
     //        1: song 2 Details
     //    If there are no songs stored in the array list, return a string that contains "No songs in playlist.".
-    public String listAllSongs() {
+    public String listSongs() {
         if (Songs.isEmpty()) {
             return "No songs in playlist.";
         }
@@ -440,6 +438,7 @@ public class Playlist {
 
 
 
+
     //-------------------------
     // HELPER METHODS
     //-------------------------
@@ -448,8 +447,6 @@ public class Playlist {
     //    This method returns true if the value passed as a parameter is a valid index in the arraylist.
     //    However, if the index is not valid, false is returned.
 
-    public boolean isValidIndex(int index) {
-        return index >= 0 && index < Songs.size();
-    }
+
 
 }

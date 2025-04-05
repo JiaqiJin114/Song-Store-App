@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Driver {
-    Scanner sc= new Scanner(System.in);
 
     //TODO Define an object of the Playlist here.  It should be declared private.
     private Playlist playlist;
@@ -20,7 +19,6 @@ public class Driver {
     }
 
     public Driver(){
-        playlist = new Playlist("", "");
         mainMenu();
         runMenu();
     }
@@ -72,8 +70,7 @@ public class Driver {
     }
 
     private void runMenu() {
-        System.out.print("Please enter your choice : ");
-        int choice = sc.nextInt();
+        int choice = ScannerInput.readNextInt("Please enter your choice : ");
         if(choice!= 0) {
             switch (choice) {
                 case 1 -> addSong();
@@ -103,49 +100,39 @@ public class Driver {
     // Private methods for CRUD on Song
     //------------------------------------
 
-
     private void addSong() {
         System.out.print("How many songs would you like to add? ");
+        Scanner sc = new Scanner(System.in);
         int songNumbers = sc.nextInt();
         for (int i = 0; i < songNumbers; i++) {
+
            int songId = ScannerInput.readNextInt("Enter song index : ");
-           String songName = ScannerInput.readNextLine("Enter song name : ");
-           String artistName = ScannerInput.readNextLine("Enter artist name : ");
-           char ans = ScannerInput.readNextChar("Is this Song Verified? (y/n): ");
-           boolean result = false;
+           System.out.print("Enter song name : ");
+           String songName = sc.next();
+           System.out.print("Enter artist name : ");
+           String artistName = sc.next();
+            System.out.print("Is this Song Verified? (y/n): ");
+            char ans = sc.next().charAt(0);
+            boolean result = false;
             if (ans == 'y' || ans == 'Y') {
                 result = true;
-
-
             }
-            int length = ScannerInput.readNextInt("Enter length : ");
+           System.out.print("Enter length : ");
+           int length = sc.nextInt();
             Song song = new Song(songId,songName,artistName,result,length);
-            playlist.addSong(song);
-            System.out.println("Add songs successfully.");
-
+           playlist.addSong(song);
         }
     }
 
     private void listAllSongs(){
-       playlist.listAllSongs();
+       playlist.listSongs();
     }
 
-
-   private void updateSong() {
-        int songId = ScannerInput.readNextInt("Enter song index : ");
-        String songName = ScannerInput.readNextLine("Enter song name : ");
-        String artistName = ScannerInput.readNextLine("Enter artist name : ");
-        char ans = ScannerInput.readNextChar("Is this Song Verified? (y/n): ");
-        boolean result = false;
-        if (ans == 'y' || ans == 'Y') {
-           result = true;
-       }
-       int length = ScannerInput.readNextInt("Enter length : ");
-       Song song = new Song(songId,songName,artistName,result,length);
-       int index = ScannerInput.readNextInt("Enter index which you want to update : ");
-       playlist.updateSong(index,song);
+    private void updateSong() {
+        System.out.println("Enter the index of the song you want to update");
+        int index = ScannerInput.readNextInt("Enter the index of the song you want to update");
+        playlist.updateSong(index, new Song(index, "New Song Name", "New Artist Name", true, 100));
     }
-
     private void deleteSong() {
         listAllSongs();
         int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
@@ -193,11 +180,11 @@ public class Driver {
 
     private void listSongsOfGivenArtist(){
         String artistName = ScannerInput.readNextLine("Enter the name of the artist you want to search");
-        String result = playlist.listOfSongsOfArtist(artistName);
-        if (result.contains("There are no songs")) {
-            System.out.println("No songs found for artist: " + artistName);
+        playlist.listOfSongsOfArtist(artistName);
+        if (artistName.equals(artistName)){
+            System.out.println("Song found: " + artistName);
         } else {
-            System.out.println(result);
+            System.out.println("Song not found");
         }
     }
 
@@ -272,8 +259,7 @@ public class Driver {
             System.out.println("File not found");
         }
         catch (Exception e) {
-            System.out.println("An error occurred: " + e.getMessage());
-
+            e.printStackTrace();
         }
         System.out.println("Playlist saved successfully");
     }
