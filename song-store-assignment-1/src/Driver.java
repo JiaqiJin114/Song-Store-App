@@ -77,7 +77,7 @@ public class Driver {
             switch (choice) {
                 case 1 -> addSong();
                 case 2 -> listAllSongs();
-                //case 3 -> updateSong();
+                case 3 -> updateSong();
                 case 4 -> deleteSong();
                 case 5 -> setVerifiedStatus();
                 case 6 -> findSongById();
@@ -104,24 +104,17 @@ public class Driver {
 
     private void addSong() {
         System.out.print("How many songs would you like to add? ");
-        Scanner sc = new Scanner(System.in);
         int songNumbers = sc.nextInt();
         for (int i = 0; i < songNumbers; i++) {
-
-           System.out.print("Enter song index : ");
-           int songId = sc.nextInt();
-           System.out.print("Enter song name : ");
-           String songName = sc.next();
-           System.out.print("Enter artist name : ");
-           String artistName = sc.next();
-            System.out.print("Is this Song Verified? (y/n): ");
-            char ans = sc.next().charAt(0);
-            boolean result = false;
+           int songId = ScannerInput.readNextInt("Enter song index : ");
+           String songName = ScannerInput.readNextLine("Enter song name : ");
+           String artistName = ScannerInput.readNextLine("Enter artist name : ");
+           char ans = ScannerInput.readNextChar("Is this Song Verified? (y/n): ");
+           boolean result = false;
             if (ans == 'y' || ans == 'Y') {
                 result = true;
             }
-           System.out.print("Enter length : ");
-           int length = sc.nextInt();
+           int length = ScannerInput.readNextInt("Enter length : ");
             Song song = new Song(songId,songName,artistName,result,length);
            playlist.addSong(song);
 
@@ -133,11 +126,21 @@ public class Driver {
     }
 
 
-   /* private void updateSong() {
-
-     playlist.updateSong()
+   private void updateSong() {
+        int songId = ScannerInput.readNextInt("Enter song index : ");
+        String songName = ScannerInput.readNextLine("Enter song name : ");
+        String artistName = ScannerInput.readNextLine("Enter artist name : ");
+        char ans = ScannerInput.readNextChar("Is this Song Verified? (y/n): ");
+        boolean result = false;
+        if (ans == 'y' || ans == 'Y') {
+           result = true;
+       }
+       int length = ScannerInput.readNextInt("Enter length : ");
+       Song song = new Song(songId,songName,artistName,result,length);
+       int index = ScannerInput.readNextInt("Enter index which you want to update : ");
+       playlist.updateSong(index,song);
     }
-*/
+
     private void deleteSong() {
         listAllSongs();
         int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
