@@ -101,23 +101,22 @@ public class Driver {
     //------------------------------------
 
     private void addSong() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("""
         Add methods
-        1)  addtsong
+        1)  addSong
         0)  Exit
         ==>> """);
-        System.out.print("Please enter your choice : ");
-        int option = sc.nextInt();
-        while (option != 0) {
-            switch (option) {
-                case 1 -> addSong();
-                case 0 -> runMenu();
-                default -> System.out.println("Invalid option entered: " + option);
+
+        int option = ScannerInput.readNextInt("Please enter your choice : ");
+        switch (option) {
+            case 1 -> {
+
             }
-            System.out.println("---------------------------------------");
-            Driver driver = new Driver();
-            driver.runMenu();
+            case 0 -> runMenu();
+            default -> {
+                System.out.println("Invalid option entered: " + option);
+                addSong();
+            }
         }
     }
 
@@ -172,10 +171,8 @@ public class Driver {
 
 
     private void findSongById() {
-        System.out.println("Finding a song by ID");
-        System.out.println("Enter the ID of the song you want to find");
         int id = ScannerInput.readNextInt("Enter the ID of the song you want to find");
-        Song song = playlist.findSong(id);
+        Song song = playlist.findSongByCode(id);
         if (song != null) {
             System.out.println("Song found: " + song.getName());
         } else {
@@ -187,7 +184,7 @@ public class Driver {
         System.out.println("Searching for a song by name");
         System.out.println("Enter the name of the song you want to search");
         String name = ScannerInput.readNextLine("Enter the name of the song you want to search");
-        Song song = playlist.findSong(name);
+        Song song = playlist.findSongByName(name);
         if (song != null) {
             System.out.println("Song found: " + song.getName());
         } else {
@@ -200,10 +197,8 @@ public class Driver {
     // ----------------------------
 
     private void listSongsOfGivenArtist(){
-        System.out.println("Listing songs of a given artist");
-        System.out.println("Enter the name of the artist you want to search");
         String artistName = ScannerInput.readNextLine("Enter the name of the artist you want to search");
-        System.out.println(playlist.listOfSongsOfArtist());
+        playlist.listOfSongsOfArtist(artistName);
         if (artistName.equals(artistName)){
             System.out.println("Song found: " + artistName);
         } else {
@@ -213,19 +208,17 @@ public class Driver {
 
     private void listSongsByVerifiedArtists(){
         System.out.println("Listing songs of verified artists");
-        System.out.println(playlist.listVerifiedArtistSong());
+        System.out.println();
     }
 
     private void listSongsOverGivenLength(){
-        System.out.println("Listing songs over a given length");
-        System.out.println("Enter the length of the song you want to search");
         int length = ScannerInput.readNextInt("Enter the length of the song you want to search");
-        System.out.println(playlist.SearchLongTimeSong());
-        if (length > 0){
-            System.out.println("Song found: " + length);
-        } else {
-            System.out.println("Song not found");
-        }
+        //System.out.println(playlist.SearchLongTimeSong(length));
+        //if (length > 0){
+        //    System.out.println("Song found: " + length);
+        //} else {
+        //    System.out.println("Song not found");
+        //}
     }
 
     private void printAverageLength(){
