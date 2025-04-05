@@ -20,6 +20,7 @@ public class Driver {
     }
 
     public Driver(){
+        playlist = new Playlist("", "");
         mainMenu();
         runMenu();
     }
@@ -102,6 +103,7 @@ public class Driver {
     // Private methods for CRUD on Song
     //------------------------------------
 
+
     private void addSong() {
         System.out.print("How many songs would you like to add? ");
         int songNumbers = sc.nextInt();
@@ -113,10 +115,13 @@ public class Driver {
            boolean result = false;
             if (ans == 'y' || ans == 'Y') {
                 result = true;
+
+
             }
-           int length = ScannerInput.readNextInt("Enter length : ");
+            int length = ScannerInput.readNextInt("Enter length : ");
             Song song = new Song(songId,songName,artistName,result,length);
-           playlist.addSong(song);
+            playlist.addSong(song);
+            System.out.println("Add songs successfully.");
 
         }
     }
@@ -188,11 +193,11 @@ public class Driver {
 
     private void listSongsOfGivenArtist(){
         String artistName = ScannerInput.readNextLine("Enter the name of the artist you want to search");
-        playlist.listOfSongsOfArtist(artistName);
-        if (artistName.equals(artistName)){
-            System.out.println("Song found: " + artistName);
+        String result = playlist.listOfSongsOfArtist(artistName);
+        if (result.contains("There are no songs")) {
+            System.out.println("No songs found for artist: " + artistName);
         } else {
-            System.out.println("Song not found");
+            System.out.println(result);
         }
     }
 
@@ -267,7 +272,8 @@ public class Driver {
             System.out.println("File not found");
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("An error occurred: " + e.getMessage());
+
         }
         System.out.println("Playlist saved successfully");
     }
