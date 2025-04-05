@@ -6,6 +6,7 @@ import com.thoughtworks.xstream.XStream;
 
 import java.io.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Driver {
@@ -19,6 +20,7 @@ public class Driver {
     }
 
     public Driver(){
+        mainMenu();
         runMenu();
     }
 
@@ -34,7 +36,7 @@ public class Driver {
     //----------------------------------------------------------------------------
     // Private methods for displaying the menu and processing the selected options
     //----------------------------------------------------------------------------
-    private int mainMenu() {
+    private void mainMenu() {
         System.out.print("""
                 ---------------------------------------------------------------------
                 |                             SONGS APP                             |
@@ -65,17 +67,17 @@ public class Driver {
                 ---------------------------------------------------------------------
                 ==>>
         ==>> """);
-        System.out.print("Please enter your choice : ");
-        return sc.nextInt();
+
     }
 
     private void runMenu() {
-        mainMenu();
-        if(mainMenu() != 0) {
-            switch (mainMenu()) {
+        System.out.print("Please enter your choice : ");
+        int choice = sc.nextInt();
+        if(choice!= 0) {
+            switch (choice) {
                 case 1 -> addSong();
                 case 2 -> listAllSongs();
-                case 3 -> updateSong();
+                //case 3 -> updateSong();
                 case 4 -> deleteSong();
                 case 5 -> setVerifiedStatus();
                 case 6 -> findSongById();
@@ -101,22 +103,24 @@ public class Driver {
     //------------------------------------
 
     private void addSong() {
-        System.out.print("""
-        Add methods
-        1)  addSong
-        0)  Exit
-        ==>> """);
+        System.out.print("How many songs would you like to add? ");
+        Scanner sc = new Scanner(System.in);
+        int songNumbers = sc.nextInt();
+        for (int i = 0; i < songNumbers; i++) {
 
-        int option = ScannerInput.readNextInt("Please enter your choice : ");
-        switch (option) {
-            case 1 -> {
+           System.out.print("Enter song index : ");
+           int songId = sc.nextInt();
+           System.out.print("Enter song name : ");
+           String songName = sc.next();
+           System.out.print("Enter artist name : ");
+           String artistName = sc.next();
+           System.out.print("Enter verified status : ");
+           boolean verified = sc.nextBoolean();
+           System.out.print("Enter length : ");
+           int length = sc.nextInt();
+            Song song = new Song(songId,songName,artistName,verified,length);
+           playlist.addSong(song);
 
-            }
-            case 0 -> runMenu();
-            default -> {
-                System.out.println("Invalid option entered: " + option);
-                addSong();
-            }
         }
     }
 
@@ -125,27 +129,11 @@ public class Driver {
     }
 
 
-    private void updateSong() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("""
-        Remove methods
-        1)  updateSong
-        0)  Exit
-        ==>> """);
-        System.out.print("Please enter your choice : ");
-        int option = sc.nextInt();
-        while (option != 0) {
-            switch (option) {
-                case 1 -> updateSong();
-                case 0 -> runMenu();
-                default -> System.out.println("Invalid option entered: " + option);
-            }
-            System.out.println("---------------------------------------");
-            Driver driver = new Driver();
-            driver.runMenu();
-        }
-    }
+   /* private void updateSong() {
 
+     playlist.updateSong()
+    }
+*/
     private void deleteSong() {
         listAllSongs();
         int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
@@ -184,12 +172,7 @@ public class Driver {
         System.out.println("Searching for a song by name");
         System.out.println("Enter the name of the song you want to search");
         String name = ScannerInput.readNextLine("Enter the name of the song you want to search");
-        Song song = playlist.findSongByName(name);
-        if (song != null) {
-            System.out.println("Song found: " + song.getName());
-        } else {
-            System.out.println("Song not found");
-        }
+        playlist.searchSongsByName(name);
     }
 
     //-----------------------------

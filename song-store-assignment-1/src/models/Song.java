@@ -11,7 +11,7 @@ public class Song {
     //     Default value is "".
     //     When creating the song, truncate the name to 20 characters.
     //     When updating an existing song, only update the name if it is 20 characters or less.
-    private String name = "";
+    private static String name = "";
 
     //TODO The song's artist (Artist artist)
     //    You should have already written the Artist class
@@ -78,7 +78,7 @@ public class Song {
         return length;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 

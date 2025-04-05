@@ -39,12 +39,12 @@ public class Playlist {
         this.description = limit(description, 30);
     }
 
-    private String limit(String string, int length){
-        if(string == null){
+    private String limit(String string, int length) {
+        if (string == null) {
             return "";
         }
-        if(string.length() > length){
-            return string.substring(0,length);
+        if (string.length() > length) {
+            return string.substring(0, length);
         }
         return string;
     }
@@ -79,7 +79,7 @@ public class Playlist {
     }
 
     public void setLikes(int likes) {
-        while (likes >= 0){
+        while (likes >= 0) {
             this.likes = likes;
         }
     }
@@ -147,9 +147,9 @@ public class Playlist {
     //       - if the supplied index is valid, the Song object at that location is returned
     //       - if the supplied index is invalid, null is returned
     //
-    public Song findSong(int index) {
+    public Song FindSong(int index) {
         if (isValidIndex(index)) {
-            return songs.get(index);
+            return Songs.get(index);
         }
         return null;
     }
@@ -159,8 +159,8 @@ public class Playlist {
     //       - if the supplied string (songName) does not match a song name in the songs list, null is returned
     //       NOTE - if that name appears more than once, it is sufficient to return the first occurence.
     public Song findSong(String songName) {
-        for (Song song : songs) {
-            if (song.getSongName().equalsIgnoreCase(songName)) {
+        for (Song song : Songs) {
+            if (Song.getName().equalsIgnoreCase(songName)) {
                 return song;
             }
         }
@@ -198,7 +198,7 @@ public class Playlist {
     //TODO Add a method, numberOfSongs().  The return type is int.
     //     This method returns the number of song objects currently stored in the array list.
     public int numSongs() {
-        return Songs.size();;
+        return Songs.size();
     }
 
 
@@ -406,7 +406,7 @@ public class Playlist {
         }
         return sb.toString();
 
-
+    }
 
         //TODO Add a method, searchSongsByArtistName(String).  The return type is String.
         //    This method returns a list of songs whose artist name contains the string passed
@@ -437,7 +437,6 @@ public class Playlist {
 
 
 
-
     //-------------------------
     // HELPER METHODS
     //-------------------------
@@ -447,8 +446,5 @@ public class Playlist {
     //    However, if the index is not valid, false is returned.
 
 
-    public boolean isValidIndex(int index) {
-        return index >= 0 && index < Songs.size();
-    }
 
 }
