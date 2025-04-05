@@ -139,7 +139,7 @@ public class Playlist {
     //      - returns true if the index is valid for the songs arrayList (in range)
     //      - returns false otherwise
     //      As this method is used inside this class, it should be private
-    private boolean isValidIndex(int index) {
+    boolean isValidIndex(int index) {
         return index >= 0 && index < Songs.size();
     }
 
@@ -252,7 +252,7 @@ public class Playlist {
     //        0: song 1 Details
     //        1: song 2 Details
     //    If there are no songs stored in the array list, return a string that contains "No songs in playlist.".
-    public String listAllSongs() {
+    public String listSongs() {
         if (Songs.isEmpty()) {
             return "No songs in playlist.";
         }
@@ -435,6 +435,7 @@ public class Playlist {
             }
             return sb.toString();
         }
+
 
 
 

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Driver {
-    Scanner sc= new Scanner(System.in);
 
     //TODO Define an object of the Playlist here.  It should be declared private.
     private Playlist playlist;
@@ -71,13 +70,12 @@ public class Driver {
     }
 
     private void runMenu() {
-        System.out.print("Please enter your choice : ");
-        int choice = sc.nextInt();
+        int choice = ScannerInput.readNextInt("Please enter your choice : ");
         if(choice!= 0) {
             switch (choice) {
                 case 1 -> addSong();
                 case 2 -> listAllSongs();
-                //case 3 -> updateSong();
+                case 3 -> updateSong();
                 case 4 -> deleteSong();
                 case 5 -> setVerifiedStatus();
                 case 6 -> findSongById();
@@ -108,8 +106,7 @@ public class Driver {
         int songNumbers = sc.nextInt();
         for (int i = 0; i < songNumbers; i++) {
 
-           System.out.print("Enter song index : ");
-           int songId = sc.nextInt();
+           int songId = ScannerInput.readNextInt("Enter song index : ");
            System.out.print("Enter song name : ");
            String songName = sc.next();
            System.out.print("Enter artist name : ");
@@ -124,20 +121,18 @@ public class Driver {
            int length = sc.nextInt();
             Song song = new Song(songId,songName,artistName,result,length);
            playlist.addSong(song);
-
         }
     }
 
     private void listAllSongs(){
-       playlist.listAllSongs();
+       playlist.listSongs();
     }
 
-
-   /* private void updateSong() {
-
-     playlist.updateSong()
+    private void updateSong() {
+        System.out.println("Enter the index of the song you want to update");
+        int index = ScannerInput.readNextInt("Enter the index of the song you want to update");
+        playlist.updateSong(index, new Song(index, "New Song Name", "New Artist Name", true, 100));
     }
-*/
     private void deleteSong() {
         listAllSongs();
         int index = ScannerInput.readNextInt("Enter the index of the song you want to delete");
