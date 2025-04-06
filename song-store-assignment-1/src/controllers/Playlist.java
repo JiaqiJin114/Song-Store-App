@@ -17,8 +17,6 @@ import java.util.Scanner;
 
 public class Playlist{
 
-    Scanner sc = new Scanner(System.in);
-
     //TODO Declare an array list of songs(songs). This should be empty at the start and does not need to be the constructor.
     private ArrayList<Song> Songs = new ArrayList<Song>();// should start empty
 
@@ -86,7 +84,7 @@ public class Playlist{
     }
 
     public void setLikes(int likes) {
-        while (likes >= 0) {
+        if (likes >= 0) {
             this.likes = likes;
         }
     }
@@ -106,7 +104,6 @@ public class Playlist{
         return false;
     }
 
-
     //TODO Add a method, updateSong(int, Song).  The return type is boolean.
     //     This method takes in, as the first parameter, the index of the songs object that you want to update.
     //     If the index is invalid (i.e. there is no song object at that location), return false.
@@ -114,12 +111,13 @@ public class Playlist{
     //     i.e. it holds the new values of  id, name, length, and artist.
     //     If the update was successful, then return true.
     public boolean updateSong(int index, Song song) {
+        if (!isValidIndex(index)) {
+            return false;
+        }
         if (song != null) {
             Songs.set(index, song);
             System.out.println("Song updated successfully");
             return true;
-        }else{
-            System.out.println("There is no song in playlist.");
         }
         System.out.println("Song not updated");
         return false;
@@ -152,16 +150,14 @@ public class Playlist{
     //      - returns true if the index is valid for the songs arrayList (in range)
     //      - returns false otherwise
     //      As this method is used inside this class, it should be private
-    private boolean IsValidIndex(int index) {
-        return index >= 0 && index < Songs.size();
-    }
+
 
 
     //TODO  Add a method  findSong(int) which returns a Song object:
     //       - if the supplied index is valid, the Song object at that location is returned
     //       - if the supplied index is invalid, null is returned
     //
-    public Song FindSong(int index) {
+    public Song findSong(int index) {
         if (isValidIndex(index)) {
             return Songs.get(index);
         }
@@ -195,12 +191,12 @@ public class Playlist{
     //      set the verified status to the parameter value
 
     public Song updateVerifiedStatus(int index, boolean verified) {
-        if (isValidIndex(index)) {
-            Song song = Songs.get(index);
-            song.getArtist().setVerified(verified);
-            return song;
+        if (!isValidIndex(index)) {
+            return null;
         }
-        return null;
+        Song song = Songs.get(index);
+        song.getArtist().setVerified(verified);
+        return song;
     }
 
 
@@ -211,6 +207,10 @@ public class Playlist{
 
     //TODO Add a method, numberOfSongs().  The return type is int.
     //     This method returns the number of song objects currently stored in the array list.
+    public int numberOfSongs() {
+        return Songs.size();
+    }
+
     public int numSongs() {
         return Songs.size();
     }
@@ -270,13 +270,11 @@ public class Playlist{
         if (Songs.isEmpty()) {
             return "No songs in playlist.";
         } else {
-            for (int i = 0; i < Songs.size() ; i++) {
+            for (int i = 0; i < Songs.size(); i++) {
                 sb.append(i).append(": ").append(Songs.get(i).toString()).append("\n");
             }
-            System.out.println(sb);
-            return "";
+            return sb.toString();
         }
-
     }
 
 
@@ -371,12 +369,7 @@ public class Playlist{
     //TODO Add a method, findSong(int).  The return type is Song.
     //    This method returns the song stored at the index that was passed as a parameter.
     //    However, if the index is not valid, null is returned.
-    public Song findSong(int index) {
-        if (isValidIndex(index)) {
-            return Songs.get(index);
-        }
-        return null;
-    }
+
 
 
     //TODO Add a method, findSongByCode(int).  The return type is Song.
@@ -442,7 +435,7 @@ public class Playlist{
         StringBuilder sb = new StringBuilder();
         boolean found = false;
         for (int i = 0; i < Songs.size(); i++) {
-            if (Songs.get(i).getName().toLowerCase().contains(artistName.toLowerCase())) {
+            if (Songs.get(i).getArtist().getArtistName().toLowerCase().contains(artistName.toLowerCase())) {
                 sb.append(Songs.get(i).getName()).append(" (").append(Songs.get(i).getSongId()).append(")\n");
                 found = true;
             }
@@ -459,8 +452,8 @@ public class Playlist{
     //TODO Add a method, isValidIndex(int).  The return type is boolean.
     //    This method returns true if the value passed as a parameter is a valid index in the arraylist.
     //    However, if the index is not valid, false is returned.
-    public boolean isValidIndex(int index){
-        return index >= 0 && index < numSongs();
+    public boolean isValidIndex(int index) {
+        return index >= 0 && index < Songs.size();
     }
 
     @SuppressWarnings("unchecked")

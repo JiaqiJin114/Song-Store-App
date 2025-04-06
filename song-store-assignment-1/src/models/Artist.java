@@ -54,9 +54,10 @@ public class Artist {
     //TODO Add a generated equals method.
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Artist artist = (Artist) o;
-        return isVerified() == artist.isVerified() && Objects.equals(getArtistName(), artist.getArtistName());
+        return verified == artist.verified && Objects.equals(artistName, artist.artistName);
     }
 
     //TODO The toString should return the string in this format:
