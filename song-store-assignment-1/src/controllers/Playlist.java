@@ -1,9 +1,13 @@
 package controllers;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import models.Artist;
 import models.Song;
 import utils.ScannerInput;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -456,5 +460,23 @@ public class Playlist {
         return index >= 0 && index < numSongs();
     }
 
+    @SuppressWarnings("unchecked")
+    public void load() throws Exception {
+        Class<?>[] classes = new Class[] { Song.class };
+        XStream xstream = new XStream(new DomDriver());
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypes(classes);
+        ObjectInputStream is = xstream.createObjectInputStream(new
+                FileReader("products.xml"));
+        Songs = (ArrayList<Song>) is.readObject();
+        is.close();
+    }
+    public void save() throws Exception {
+        XStream xstream = new XStream(new DomDriver());
+        ObjectOutputStream out =
+                xstream.createObjectOutputStream(new FileWriter("products.xml"));
+        out.writeObject(Songs);
+        out.close();
+    }
 
 }

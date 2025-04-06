@@ -244,41 +244,23 @@ public class Driver {
     //TODO Add a method, load().  The return type is void.
     //    This method uses the XStream component to deserialise the playList object and their associated artists from
     //    an XML file into the Songs array list.
-    private void load(){
+    public void load(){
         try {
-            XStream xstream = new XStream(new StaxDriver());
-            FileInputStream fis = new FileInputStream("playlist.xml");
-            ObjectInputStream is = xstream.createObjectInputStream(fis);
-            playlist = (Playlist) is.readObject();
-            is.close();
+            playlist.load();
+        } catch (Exception e) {
+            System.err.println("Error reading from file: " + e);
         }
-        catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("Playlist loaded successfully");
     }
 
 
     //TODO Add a method, save().  The return type is void.
     //    This method uses the XStream component to serialise the playList object and their associated artists to
     //    an XML file.
-    private void save(){
+    public void save(){
         try {
-            XStream xstream = new XStream(new StaxDriver());
-            FileOutputStream fos = new FileOutputStream("playlist.xml");
-            ObjectOutputStream out = xstream.createObjectOutputStream(fos);
-            out.writeObject(playlist);
-            out.close();
+            playlist.save();
+        } catch (Exception e) {
+            System.err.println("Error writing to file: " + e);
         }
-        catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("Playlist saved successfully");
     }
 }

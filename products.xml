@@ -1,0 +1,22 @@
+<object-stream>
+  <list>
+    <models.Song>
+      <songId>1002</songId>
+      <name>w</name>
+      <artist>
+        <artistName>w</artistName>
+        <verified>true</verified>
+      </artist>
+      <length>101</length>
+    </models.Song>
+    <models.Song>
+      <songId>1003</songId>
+      <name>ew</name>
+      <artist>
+        <artistName>ew</artistName>
+        <verified>false</verified>
+      </artist>
+      <length>103</length>
+    </models.Song>
+  </list>
+</object-stream>
