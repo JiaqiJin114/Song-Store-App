@@ -64,6 +64,9 @@ public class Driver {
                 ---------------------------------------------------------------------
                 |   20) Save                                                        |
                 |   21) Load                                                        |
+                |   22) rename                                                      |
+                |   23) delete                                                      |
+                |   24) find                                                        |
                 |   0) Exit                                                         |
                 ---------------------------------------------------------------------
         ==>> """);
@@ -96,6 +99,9 @@ public class Driver {
             case 13 -> printLengthOfPlaylist();
             case 20 -> save();
             case 21 -> load();
+            case 22 -> rename();
+            case 23 -> delete();
+            case 24 -> find();
             default -> System.out.println("Invalid choice. Please try again.");
         }
     }
@@ -262,5 +268,23 @@ public class Driver {
         } catch (Exception e) {
             System.err.println("Error writing to file: " + e);
         }
+    }
+
+    public void rename(){
+        System.out.println("Renaming the playlist");
+        String newFileName = ScannerInput.readNextLine("Enter the new file name : ");
+        playlist.rename(newFileName);
+    }
+
+    public void delete(){
+        System.out.println("Delete the playlist");
+        String filename = ScannerInput.readNextLine("Enter the file name to delete : ");
+        playlist.delete(filename);
+    }
+
+    public void find(){
+        System.out.println("Find the playlist");
+        String filename = ScannerInput.readNextLine("Enter the file name to find : ");
+        playlist.findFile(filename);
     }
 }

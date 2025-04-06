@@ -8,11 +8,14 @@ import models.Song;
 import utils.ScannerInput;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Playlist {
+public class Playlist{
 
     Scanner sc = new Scanner(System.in);
 
@@ -477,6 +480,43 @@ public class Playlist {
                 xstream.createObjectOutputStream(new FileWriter("products.xml"));
         out.writeObject(Songs);
         out.close();
+    }
+
+    public void rename(String newName){
+        Path source = Paths.get("products.xml");
+        Path target = Paths.get(newName);
+
+        try {
+            if(Files.exists(source)) {
+                Files.move(source, target);
+                System.out.println("Rename successful");
+            }else{
+                System.out.println("File does not exist");
+            }
+        } catch (IOException e) {
+            System.out.println("Rename unsuccessful" + e.getMessage());
+        }
+    }
+
+    public void delete(String fileName){
+        if (Files.exists(Paths.get(fileName))) {
+            try {
+                Files.delete(Paths.get(fileName));
+                System.out.println("File deleted successfully");
+            } catch (IOException e) {
+                System.out.println("File deletion unsuccessful" + e.getMessage());
+            }
+        } else {
+            System.out.println("File do not exist.");;
+        }
+    }
+
+    public void findFile(String fileName){
+        if (Files.exists(Paths.get(fileName))) {
+            System.out.println(Paths.get(fileName).getFileName());
+        } else {
+            System.out.println("File do not exist.");;
+        }
     }
 
 }
